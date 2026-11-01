@@ -95,7 +95,7 @@ def update_song(id):
         return {"message": "song not found"}, 404
 
     song = db.songs.find_one({"id": id}, {"_id": 0})
-    return jsonify(song), 200
+    return jsonify(song), 201
 
 ######################################################################
 # DELETE A SONG
