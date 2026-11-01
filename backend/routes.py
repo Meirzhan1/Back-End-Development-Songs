@@ -58,5 +58,28 @@ def health():
     return jsonify(dict(status="OK")), 200
 
 ######################################################################
+# GET ALL SONGS
+######################################################################
+
+
+@app.route("/song", methods=["GET"])
+def songs():
+    songs = list(db.songs.find({}, {"_id": 0}))
+    return jsonify(songs), 200
+
+######################################################################
+# GET A SONG
+######################################################################
+
+
+@app.route("/song/<int:id>", methods=["GET"])
+def get_song_by_id(id):
+    song = db.songs.find_one({"id": id}, {"_id": 0})
+    if song:
+        return jsonify(song), 200
+
+    return {"message": "song not found"}, 404
+
+######################################################################
 # INSERT CODE HERE
 ######################################################################
