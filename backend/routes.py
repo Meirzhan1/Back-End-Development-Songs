@@ -81,5 +81,22 @@ def get_song_by_id(id):
     return {"message": "song not found"}, 404
 
 ######################################################################
+# UPDATE A SONG
+######################################################################
+
+
+@app.route("/song/<int:id>", methods=["PUT"])
+def update_song(id):
+    updated = request.get_json()
+    updated.pop("_id", None)
+
+    result = db.songs.update_one({"id": id}, {"$set": updated})
+    if result.matched_count == 0:
+        return {"message": "song not found"}, 404
+
+    song = db.songs.find_one({"id": id}, {"_id": 0})
+    return jsonify(song), 200
+
+######################################################################
 # INSERT CODE HERE
 ######################################################################
