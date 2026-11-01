@@ -98,5 +98,18 @@ def update_song(id):
     return jsonify(song), 200
 
 ######################################################################
+# DELETE A SONG
+######################################################################
+
+
+@app.route("/song/<int:id>", methods=["DELETE"])
+def delete_song(id):
+    result = db.songs.delete_one({"id": id})
+    if result.deleted_count == 0:
+        return {"message": "song not found"}, 404
+
+    return "", 204
+
+######################################################################
 # INSERT CODE HERE
 ######################################################################
